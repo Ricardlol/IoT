@@ -1,0 +1,69 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/home/brunomoya/Escritorio/Universidad/4r Año/IOT/IoT/include",
+                "/home/brunomoya/Escritorio/Universidad/4r Año/IOT/IoT/src",
+                "/home/brunomoya/Escritorio/Universidad/4r Año/IOT/IoT/.pio/libdeps/nrf52_dk/BLEPeripheral/src",
+                "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/libraries/SPI",
+                "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5",
+                "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/drivers_nrf/delay",
+                "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/device",
+                "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/toolchain",
+                "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/toolchain/CMSIS/Include",
+                "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/softdevice/s132/headers",
+                "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/variants/nRF52DK",
+                "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/libraries/Wire",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/brunomoya/Escritorio/Universidad/4r Año/IOT/IoT/include",
+                    "/home/brunomoya/Escritorio/Universidad/4r Año/IOT/IoT/src",
+                    "/home/brunomoya/Escritorio/Universidad/4r Año/IOT/IoT/.pio/libdeps/nrf52_dk/BLEPeripheral/src",
+                    "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/libraries/SPI",
+                    "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5",
+                    "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/drivers_nrf/delay",
+                    "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/device",
+                    "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/toolchain",
+                    "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/toolchain/CMSIS/Include",
+                    "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/cores/nRF5/SDK/components/softdevice/s132/headers",
+                    "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/variants/nRF52DK",
+                    "/home/brunomoya/.platformio/packages/framework-arduinonordicnrf5/libraries/Wire",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60104",
+                "ARDUINO_NRF52_DK",
+                "NRF52_S132",
+                "ARDUINO=10805",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_NRF5",
+                "NRF5",
+                "NRF52",
+                "S132",
+                "USE_LFXO",
+                ""
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "/home/brunomoya/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc",
+            "compilerArgs": [
+                "-mthumb",
+                "-mcpu=cortex-m4",
+                "-mfloat-abi=softfp",
+                "-mfpu=fpv4-sp-d16",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}

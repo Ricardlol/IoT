@@ -1,3 +1,4 @@
+import asyncio
 from utils.connection_manager import ConnectionManager
 from utils.db_manager import DbManager
 import uvicorn
@@ -9,7 +10,8 @@ from models.models import *
 import logging
 from dependencies import *
 from routers import users, auth, sensors
-
+from typing import List
+import time
 
 dir_path = 'api.log'
 logging.basicConfig(filename=dir_path, filemode='w', format='%(name)s - %(levelname)s - %(message)s',
@@ -38,7 +40,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect phone number",
+            detail="Incorrect phone number. Maybe user does not exist.",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
@@ -50,10 +52,17 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     utils.users.refresh_token(db, user.phone_number, access_token)
     return {"access_token": access_token, "token_type": "bearer"}
 
+def calculate_data(sensor_values: List[schemas.Sensor]):
+    """Calculate data for all sensors"""
+    # for sensor in sensor_values:
+    #     print(sensor.data)
+
+    return sum([sensor.data for sensor in sensor_values])
+
 manager = ConnectionManager()
 
 @app.websocket("/ws/{client_id}")
-async def websocket_endpoint(websocket: WebSocket, client_id: str,  path_str: str , db: Session = Depends(get_db)):
+async def websocket_endpoint(websocket: WebSocket, client_id: str, db: Session = Depends(get_db)):
     
     # if (path_to_upload.isNotEmpty)
     # {
@@ -65,20 +74,35 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str,  path_str: st
     await manager.connect(websocket)
     
     print("Connected")
-
-    await manager.broadcast(client_id + " connected")
-    await manager.broadcast(client_id + " is watchdoging for path " + path_str)
+    manager.active_users.append(utils.users.get_user_by_id(db, client_id, True))
 
     try:
         while True:
-            data = await websocket.receive_text()
-            # print('WEBSOCKET: ' + data)
-            if len(data) > 0:
-                print('WEBSOCKET: ' + data)
+            # data = await websocket.receive_text()
+            # # print('WEBSOCKET: ' + data)
+            # if len(data) > 0:
+            #     print('WEBSOCKET: ' + data)
+            print("Waiting for data")
+            if len(manager.active_users) > 0:
+                for user in manager.active_users:
+                    sensor_values = utils.users.get_user_by_id(db, user.id, True).sensors
+                    # print(sensor_values)
+                    data = calculate_data(sensor_values)
+                    print(data)
+                    # await manager.send_personal_message(message=str(data), websocket=websocket)
+                    if data > 0:
+                        message = "You need to take insulin"
+                        await manager.send_personal_message(message=message, websocket=websocket)
+                    
+                    # await manager.broadcast(message=str(data))
+                    await asyncio.sleep(1)
+                
+
+            
 
     except WebSocketDisconnect:
         manager.disconnect(websocket)
-        await manager.broadcast(f"Client #{path_str} left the chat")
+        # await manager.broadcast(f"Client #{path_str} left the chat")
 
 if __name__ == "__main__":
-    uvicorn.run(app, host='127.0.0.1', port=8000, debug=True)
+    uvicorn.run(app, host='127.0.0.1', port=8000)

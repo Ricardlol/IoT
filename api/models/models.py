@@ -22,6 +22,7 @@ class BaseSensorModelSchema(object):
     id = Column(String(36), primary_key=True)
     sensor_type = Column(String(255))
     name = Column(String(255))
+    unit_of_measurement = Column(String(255))
 
     @declared_attr
     def user_id(cls):

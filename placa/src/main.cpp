@@ -13,7 +13,7 @@ BLEService Service = BLEService("700A");
 // BLECharCharacteristic changedCharacteristic = BLECharCharacteristic("19b10000e8f2537e4f6cd104768aabcd", BLERead | BLEWrite);
 
 // create switch characteristic only read
-BLECharCharacteristic changedCharacteristic = BLECharCharacteristic("701A", BLERead);
+BLECharCharacteristic changedCharacteristic = BLECharCharacteristic("701A", BLERead | BLENotify);
 
 void setup() {
   Serial.begin(9600);
@@ -48,12 +48,12 @@ void loop() {
     byte value = 0;
     while (central.connected()) {
 
-     if(value < 10){
+    //  if(value < 10){
       Serial.print(value);
       changedCharacteristic.setValue(value);
       value = value + 1;
-      delay(5000);
-     }
+      // delay(5000);
+    //  }
       
     }
 

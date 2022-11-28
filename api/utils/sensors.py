@@ -51,9 +51,9 @@ def update_sensor(db: Session, sensor: schemas.Sensor, db_sensor: models.Sensor)
 
 def get_platform_sensors(user_db: models.User):
     sensors = []
-    sensors.append(schemas.Sensor(id=str(uuid.uuid4()), sensor_type="temperature", name="temperature", data=0, user_id=user_db.id))
-    sensors.append(schemas.Sensor(id=str(uuid.uuid4()), sensor_type="humidity", name="humidity", data=0, user_id=user_db.id))
-    sensors.append(schemas.Sensor(id=str(uuid.uuid4()), sensor_type="pressure", name="pressure", data=0, user_id=user_db.id))
-    sensors.append(schemas.Sensor(id=str(uuid.uuid4()), sensor_type="altitude", name="altitude", data=0, user_id=user_db.id))
+    sensors.append(schemas.Sensor(id=str(uuid.uuid4()), unit_of_measurement="mg/dl", sensor_type="sugar_in_blood", name="Glucose Reader", data=0, user_id=user_db.id))
+    sensors.append(schemas.Sensor(id=str(uuid.uuid4()), unit_of_measurement="mm/Hg", sensor_type="blood_presure", name="Blood Presure", data=0, user_id=user_db.id))
+    sensors.append(schemas.Sensor(id=str(uuid.uuid4()), unit_of_measurement="HRV", sensor_type="heart_rate", name="Heart Rate", data=0, user_id=user_db.id))
+    sensors.append(schemas.Sensor(id=str(uuid.uuid4()), unit_of_measurement="HRV", sensor_type="oxygen_in_blood", name="Oxygen in Blood", data=0, user_id=user_db.id))
 
     return sensors

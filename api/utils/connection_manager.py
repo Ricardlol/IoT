@@ -1,15 +1,17 @@
 from typing import List
 
 from fastapi import WebSocket
-
+import schemas 
 
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
+        self.active_users: List[schemas.UserInDB] = []
 
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active_connections.append(websocket)
+        
         await self.send_personal_message(message="Welcome to DiaHelp", websocket=websocket)
         # UploadWatchdog.get_instance().add_new_connection(websocket=websocket)
 

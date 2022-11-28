@@ -83,6 +83,7 @@ def create_user(db: Session, user: schemas.UserCreate, hashed_password: str):
         stid = db_user.id[0:8] + sensor.id[8:]
 
         sensor_db = models.Sensor(id=stid,
+                                            unit_of_measurement=sensor.unit_of_measurement,
                                             sensor_type=sensor.sensor_type,
                                             name=sensor.name,
                                             data=sensor.data,

@@ -19,6 +19,7 @@ class BaseSensorSchema(BaseModel):
     name: str
     data: float
     user_id : str
+    unit_of_measurement: str
 
     class Config:
         orm_mode = True
