@@ -9,6 +9,9 @@ import 'package:flutter_reactive_ble_example/src/ui/ble_status_screen.dart';
 import 'package:flutter_reactive_ble_example/src/ui/device_list.dart';
 import 'package:provider/provider.dart';
 
+import 'src/api/models/user.dart';
+import 'src/ui/websocket.dart';
+
 import 'src/ble/ble_logger.dart';
 
 const _themeColor = Colors.lightGreen;
@@ -89,8 +92,8 @@ class HomeScreen extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             List<Widget> children;
             if (snapshot.hasData) {
-              Api().getCurrentUser().then((value) => print(value));
-              return const DeviceListScreen();
+              // return loadWebsocketBuilder(); // this returns the websocket widget
+              return const DeviceListScreen(); // this returns the list of devices
             } else if (snapshot.hasError) {
               children = <Widget>[
                 const Icon(
@@ -128,8 +131,50 @@ class HomeScreen extends StatelessWidget {
         return BleStatusScreen(status: status ?? BleStatus.unknown);
       }
     },
+
+
+
   );
 
+  Widget loadWebsocketBuilder ()=> FutureBuilder<User>(
+        future: Api().getCurrentUser(), // a previously-obtained Future<String> or null
+        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            return WebSocket(userId: snapshot.data!.id);
+          } else if (snapshot.hasError) {
+            children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              ),
+            ];
+          } else {
+            children = const <Widget>[
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              ),
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
+            ),
+          );
+        }
+    );
 // create a future builder to check if the user is logged in
 // if not, then redirect to the login page
 // if yes, then redirect to the home page

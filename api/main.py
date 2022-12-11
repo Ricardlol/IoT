@@ -86,7 +86,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str, db: Session =
             if len(manager.active_users) > 0:
                 for user in manager.active_users:
                     sensor_values = utils.users.get_user_by_id(db, user.id, True).sensors
-                    # print(sensor_values)
+                    print(sensor_values)
                     data = calculate_data(sensor_values)
                     print(data)
                     # await manager.send_personal_message(message=str(data), websocket=websocket)

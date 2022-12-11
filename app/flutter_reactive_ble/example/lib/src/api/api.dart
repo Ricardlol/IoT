@@ -16,7 +16,7 @@ import 'models/user.dart';
 
 class Api {
   static const int TIMEOUT_TIME = 5;
-  static const String BASE_URL = "https://93d5-79-157-130-10.eu.ngrok.io/";
+  static const String BASE_URL = "https://b04d-79-157-130-10.eu.ngrok.io/";
 
   //Gets mind structure
   Future<User> getCurrentUser() async {
