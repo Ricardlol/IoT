@@ -85,14 +85,24 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str, db: Session =
             print("Waiting for data")
             if len(manager.active_users) > 0:
                 for user in manager.active_users:
-                    sensor_values = utils.users.get_user_by_id(db, user.id, True).sensors
+                    db = SessionLocal()
+
+                    user_db = utils.users.get_user_by_id(db, user.id, True)
+                    sensor_values = user_db.sensors
                     print(sensor_values)
+
                     data = calculate_data(sensor_values)
                     print(data)
                     # await manager.send_personal_message(message=str(data), websocket=websocket)
                     if data > 0:
                         message = "You need to take insulin"
                         await manager.send_personal_message(message=message, websocket=websocket)
+                        
+                        # modify sensor value to 0
+                        for sensor in sensor_values:
+                            sensor.data = 0
+                            db.commit()
+                            db.refresh(sensor)
                     
                     # await manager.broadcast(message=str(data))
                     await asyncio.sleep(1)
