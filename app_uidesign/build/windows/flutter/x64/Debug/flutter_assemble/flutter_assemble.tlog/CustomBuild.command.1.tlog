@@ -1,0 +1,28 @@
+^C:\USERS\GEPETO\DESKTOP\APP_UIDESIGN\APP_UIDESIGN\BUILD\WINDOWS\CMAKEFILES\51DB97F227067EE92EF1B119CE78DAE2\FLUTTER_WINDOWS.DLL.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=C:\Development\flutter PROJECT_DIR=C:\Users\Gepeto\Desktop\app_uidesign\app_uidesign FLUTTER_ROOT=C:\Development\flutter FLUTTER_EPHEMERAL_DIR=C:\Users\Gepeto\Desktop\app_uidesign\app_uidesign\windows\flutter\ephemeral PROJECT_DIR=C:\Users\Gepeto\Desktop\app_uidesign\app_uidesign FLUTTER_TARGET=C:\Users\Gepeto\Desktop\app_uidesign\app_uidesign\lib\main.dart DART_DEFINES=RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ== DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=C:\Users\Gepeto\Desktop\app_uidesign\app_uidesign\.dart_tool\package_config.json C:/Development/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\GEPETO\DESKTOP\APP_UIDESIGN\APP_UIDESIGN\BUILD\WINDOWS\CMAKEFILES\794A18192B4E040ECB8F80263B8BE446\FLUTTER_ASSEMBLE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\GEPETO\DESKTOP\APP_UIDESIGN\APP_UIDESIGN\WINDOWS\FLUTTER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/windows -BC:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows --check-stamp-file C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/flutter/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

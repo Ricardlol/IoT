@@ -1,0 +1,10 @@
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/CMakeFiles/INSTALL.dir
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/CMakeFiles/ALL_BUILD.dir
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/flutter/CMakeFiles/flutter_wrapper_plugin.dir
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/flutter/CMakeFiles/flutter_wrapper_app.dir
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/flutter/CMakeFiles/flutter_assemble.dir
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/flutter/CMakeFiles/INSTALL.dir
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/runner/CMakeFiles/app_uidesign.dir
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/runner/CMakeFiles/INSTALL.dir
+C:/Users/Gepeto/Desktop/app_uidesign/app_uidesign/build/windows/runner/CMakeFiles/ALL_BUILD.dir
