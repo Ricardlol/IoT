@@ -1,0 +1,51 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.signify.hue.flutterreactiveble" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="21"
+6-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml
+7        android:targetSdkVersion="31" />
+7-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml
+8
+9    <!-- required for API 18 - 30 -->
+10    <uses-permission
+10-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:5:5-7:38
+11        android:name="android.permission.BLUETOOTH"
+11-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:6:9-52
+12        android:maxSdkVersion="30" />
+12-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:7:9-35
+13    <uses-permission
+13-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:8:5-10:38
+14        android:name="android.permission.BLUETOOTH_ADMIN"
+14-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:9:9-58
+15        android:maxSdkVersion="30" />
+15-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:10:9-35
+16
+17    <!-- required for API 23 - 30 -->
+18    <uses-permission-sdk-23
+18-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:13:5-15:38
+19        android:name="android.permission.ACCESS_COARSE_LOCATION"
+19-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:14:9-65
+20        android:maxSdkVersion="30" />
+20-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:15:9-35
+21    <uses-permission-sdk-23
+21-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:16:5-18:38
+22        android:name="android.permission.ACCESS_FINE_LOCATION"
+22-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:17:9-63
+23        android:maxSdkVersion="30" />
+23-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:18:9-35
+24
+25    <!-- API 31+ -->
+26    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+26-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:21:5-76
+26-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:21:22-73
+27    <!--
+28         add android:usesPermissionFlags="neverForLocation" when you can strongly assert that
+29         your app never derives physical location from Bluetooth scan results.
+30    -->
+31    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+31-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:24:5-73
+31-->D:\Desktop\Universidad\IOT\IoT\app_new\packages\reactive_ble_mobile\android\src\main\AndroidManifest.xml:24:22-70
+32
+33</manifest>

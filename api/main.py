@@ -75,6 +75,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str, db: Session =
     
     print("Connected")
     manager.active_users.append(utils.users.get_user_by_id(db, client_id, True))
+    message_sent = False
 
     try:
         while True:
@@ -93,16 +94,17 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str, db: Session =
 
                     data = calculate_data(sensor_values)
                     print(data)
+
                     # await manager.send_personal_message(message=str(data), websocket=websocket)
-                    if data > 0:
+                    if data > 50 and not message_sent:
                         message = "You need to take insulin"
                         await manager.send_personal_message(message=message, websocket=websocket)
-                        
+                        message_sent = True
                         # modify sensor value to 0
-                        for sensor in sensor_values:
-                            sensor.data = 0
-                            db.commit()
-                            db.refresh(sensor)
+                        # for sensor in sensor_values:
+                        #     sensor.data = 0
+                        #     db.commit()
+                        #     db.refresh(sensor)
                     
                     # await manager.broadcast(message=str(data))
                     await asyncio.sleep(1)
