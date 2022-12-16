@@ -26,6 +26,20 @@ class _MobileScaffoldState extends State<MobileScaffold> {
   String pressureData = "No data received";
   String oxygenInBloodData = "No data received";
 
+  void resetSensorValues() {
+    setState(() {
+      glucoseData = "No data received";
+      heartbeatData = "No data received";
+      pressureData = "No data received";
+      oxygenInBloodData = "No data received";
+    });
+
+    for (var sensor in widget.user.sensors) {
+      sensor.data = 0;
+      Api().updateSensorData(sensor);
+    }
+  }
+
   void UpdateSensorValue(String sensorType,  List<int> dataInt) {
     for (var sensor in widget.user.sensors) {
       // print("Sensor: " + sensor.sensor_type);
@@ -56,7 +70,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
   // init state
   void initState() {
     super.initState();
-
+    resetSensorValues();
     bool isConnected = false;
     Uuid serviceId = Uuid.parse("0000700a-0000-1000-8000-00805f9b34fb");
 

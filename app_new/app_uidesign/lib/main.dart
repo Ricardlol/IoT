@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
-          return loadWebsocketBuilder(); // this returns the websocket widget
+          return loadWebsocketBuilder(context); // this returns the websocket widget
            // this returns the list of devices
         } else if (snapshot.hasError) {
           children = <Widget>[
@@ -86,58 +86,63 @@ class HomeScreen extends StatelessWidget {
     ));
   }
 
-  Widget loadWebsocketBuilder ()=>
-      FutureBuilder<User>(
-      future: Api().getCurrentUser(), // a previously-obtained Future<String> or null
-      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-        List<Widget> children;
-        if (snapshot.hasData) {
-          return Stack(
-              children: [
-                WebSocket(user: snapshot.data!),
-                MobileScaffold(user: snapshot.data!),
-              ]
-          );
-          // return WebSocket(user: snapshot.data!);
-        } else if (snapshot.hasError) {
-          children = <Widget>[
-            const Icon(
-              Icons.error_outline,
-              color: Colors.red,
-              size: 60,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Text('Error: ${snapshot.error}'),
-            ),
-          ];
-        } else {
-          children = const <Widget>[
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: CircularProgressIndicator(),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: Text('Awaiting result...'),
-            ),
-          ];
-        }
-        return DefaultTextStyle(style: Theme.of(context).textTheme.headline6!,
-        child:  Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: children,
-          ),
-          ),
-        );
-      }
-  );
-// create a future builder to check if the user is logged in
-// if not, then redirect to the login page
-// if yes, then redirect to the home page
-//
-
-
+  Widget loadWebsocketBuilder (BuildContext context) {
+    return DefaultTextStyle(
+        style: Theme
+            .of(context)
+            .textTheme
+            .headline2!,
+        textAlign: TextAlign.center,
+        child: FutureBuilder<User>(
+            future: Api().getCurrentUser(),
+            // a previously-obtained Future<String> or null
+            builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+              List<Widget> children;
+              if (snapshot.hasData) {
+                return Stack(
+                    children: [
+                      WebSocket(user: snapshot.data!),
+                      MobileScaffold(user: snapshot.data!),
+                    ]
+                );
+                // return WebSocket(user: snapshot.data!);
+              } else if (snapshot.hasError) {
+                children = <Widget>[
+                  const Icon(
+                    Icons.error_outline,
+                    color: Colors.red,
+                    size: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text('Error: ${snapshot.error}'),
+                  ),
+                ];
+              } else {
+                children = const <Widget>[
+                  SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: CircularProgressIndicator(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Text('Awaiting result...'),
+                  ),
+                ];
+              }
+              return DefaultTextStyle(style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline6!,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: children,
+                  ),
+                ),
+              );
+            }
+        ));
+  }
 }
