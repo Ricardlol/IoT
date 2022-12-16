@@ -59,6 +59,11 @@ def calculate_data(sensor_values: List[schemas.Sensor]):
 
     return sum([sensor.data for sensor in sensor_values])
 
+def get_sensor_value(sensor_type: str, sensor_values: List[schemas.Sensor]):
+    for sensor in sensor_values:
+        if sensor.sensor_type == sensor_type:
+            return sensor.data 
+
 manager = ConnectionManager()
 
 @app.websocket("/ws/{client_id}")
@@ -92,12 +97,18 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str, db: Session =
                     sensor_values = user_db.sensors
                     print(sensor_values)
 
-                    data = calculate_data(sensor_values)
-                    print(data)
+                    glucose_value = get_sensor_value("sugar_in_blood", sensor_values)
+                    print(glucose_value)
+                    heart_rate_value = get_sensor_value("heart_rate", sensor_values)
+                    print(heart_rate_value)
+                    pressure_value = get_sensor_value("blood_presure", sensor_values)
+                    print(pressure_value)
+                    oxygen_in_blood_value = get_sensor_value("oxygen_in_blood", sensor_values)
+                    print(oxygen_in_blood_value)
 
                     # await manager.send_personal_message(message=str(data), websocket=websocket)
-                    if data > 50 and not message_sent:
-                        message = "You need to take insulin"
+                    if glucose_value > 85 and not message_sent:
+                        message = "You need to take insulin||https://cdn-icons-png.flaticon.com/512/6192/6192146.png"
                         await manager.send_personal_message(message=message, websocket=websocket)
                         message_sent = True
                         # modify sensor value to 0
@@ -105,6 +116,18 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str, db: Session =
                         #     sensor.data = 0
                         #     db.commit()
                         #     db.refresh(sensor)
+
+                    if heart_rate_value > 100 and not message_sent:
+                        message = "Take a look at your heart rate!||https://cdn-icons-png.flaticon.com/512/865/865969.png"
+                        await manager.send_personal_message(message=message, websocket=websocket)
+
+                    if pressure_value > 120 and not message_sent:
+                        message = "Take a look at your blood pressure!||https://cdn-icons-png.flaticon.com/512/5015/5015609.png"
+                        await manager.send_personal_message(message=message, websocket=websocket)
+
+                    if oxygen_in_blood_value < 90 and not message_sent:
+                        message = "Take a look at your oxygen in blood values!||https://icons.veryicon.com/png/o/healthcate-medical/medical-and-health-industry-icon-library/blood-oxygen-3.png"
+                        await manager.send_personal_message(message=message, websocket=websocket)
                     
                     # await manager.broadcast(message=str(data))
                     await asyncio.sleep(1)

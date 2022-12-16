@@ -69,6 +69,8 @@ def create_user(db: Session, user: schemas.UserCreate, hashed_password: str):
     current_date = datetime.datetime.now()
 
     db_user = models.User(id=id,
+                            age=user.age,
+                            gender= user.gender,
                             phone_number=user.phone_number,
                             full_name=user.full_name,
                             hashed_password=hashed_password,

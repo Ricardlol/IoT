@@ -1,7 +1,7 @@
 from sqlalchemy.sql.schema import ForeignKey
 
 import db
-from sqlalchemy import Column, Boolean, String, Float, DateTime, Text, Date, Time, asc, func
+from sqlalchemy import Column, Boolean, String, Float, DateTime, Integer
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy.orm import relationship
 
@@ -39,6 +39,8 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(String(36), primary_key=True)
     phone_number = Column(String(255))
+    age = Column(Integer)
+    gender = Column(String(255))
     full_name = Column(String(255))
     hashed_password = Column(String(255))
     avatar_url = Column(String(255))

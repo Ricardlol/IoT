@@ -41,7 +41,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
+    return DefaultTextStyle(
+        style: Theme.of(context).textTheme.headline2!,
+    textAlign: TextAlign.center,
+    child: FutureBuilder<String>(
       future: _calculation, // a previously-obtained Future<String> or null
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         List<Widget> children;
@@ -80,10 +83,11 @@ class HomeScreen extends StatelessWidget {
           ),
         );
       },
-    );
+    ));
   }
 
-  Widget loadWebsocketBuilder ()=> FutureBuilder<User>(
+  Widget loadWebsocketBuilder ()=>
+      FutureBuilder<User>(
       future: Api().getCurrentUser(), // a previously-obtained Future<String> or null
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         List<Widget> children;

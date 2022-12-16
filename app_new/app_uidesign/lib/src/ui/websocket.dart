@@ -52,31 +52,35 @@ class  _WebSocketState  extends State<WebSocket> {
         _messages.add(message as String);
         // if message contains 'Welcome' we show a nicer alert.
         if (message.contains('Welcome')){
-          // Alert(
-          //   context: context,
-          //   //type: AlertType.info,
-          //   title: "Hello ${widget.user.full_name}!",
-          //   desc: message as String,
-          //   image: Image.network(widget.user.avatar_url),
-          //   buttons: [
-          //     DialogButton(
-          //       child: const Text(
-          //         "OK",
-          //         style: TextStyle(color: Colors.white, fontSize: 20),
-          //       ),
-          //       onPressed: () => Navigator.pop(context),
-          //       width: 120,
-          //     )
-          //   ],
-          // ).show();
+          Alert(
+            context: context,
+            //type: AlertType.info,
+            title: "Hello ${widget.user.full_name}!",
+            desc: message as String,
+            image: Image.network(widget.user.avatar_url),
+            buttons: [
+              DialogButton(
+                child: const Text(
+                  "OK",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show();
         }
         else {
+          print('message: $message');
+          // divide message by '||' and get the first part
+          var messageParts = message.split('||');
+
           Alert(
             context: context,
             //type: AlertType.warning,
-            image: Image.network('https://cdn-icons-png.flaticon.com/512/6192/6192146.png'),
+            image: Image.network(messageParts[1]),
             title: "Caution!",
-            desc: message as String,
+            desc: messageParts[0],
             buttons: [
               DialogButton(
                 child: const Text(

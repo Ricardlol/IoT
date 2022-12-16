@@ -30,9 +30,13 @@ class Sensor(BaseSensorSchema):
 class UserCreate(BaseModel):
     phone_number: str
     full_name: str
+    age: int
+    gender: str
 
 class User(BaseModel):
     id: str
+    age: int
+    gender: str
     phone_number: str
     full_name: str
     avatar_url: str
