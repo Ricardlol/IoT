@@ -1,0 +1,44 @@
+{
+  "id": "ea46df80-43c4-4003-89c0-500135be3cf1",
+  "age": 63,
+  "gender": "Woman",
+  "phone_number": "123456789",
+  "full_name": "Josefina Ludios",
+  "avatar_url": "https://www.gravatar.com/avatar/",
+  "disabled": false,
+  "creation_date": "2022-11-28T11:50:52.767585",
+  "sensors": [
+    {
+      "id": "ea46df80-e089-4bc0-ad6b-d4a8a915d651",
+      "sensor_type": "sugar_in_blood",
+      "name": "Glucose Reader",
+      "data": 120,
+      "user_id": "ea46df80-43c4-4003-89c0-500135be3cf1",
+      "unit_of_measurement": "mg/dl"
+    },
+    {
+      "id": "ea46df80-6d36-4113-8123-05e5337c0fcc",
+      "sensor_type": "blood_presure",
+      "name": "Blood Presure",
+      "data": 105,
+      "user_id": "ea46df80-43c4-4003-89c0-500135be3cf1",
+      "unit_of_measurement": "mm/Hg"
+    },
+    {
+      "id": "ea46df80-eb62-41d9-9482-5385df993b72",
+      "sensor_type": "heart_rate",
+      "name": "Heart Rate",
+      "data": 40,
+      "user_id": "ea46df80-43c4-4003-89c0-500135be3cf1",
+      "unit_of_measurement": "HRV"
+    },
+    {
+      "id": "ea46df80-790f-44c5-b8e7-38b1bcd0b783",
+      "sensor_type": "oxygen_in_blood",
+      "name": "Oxygen in Blood",
+      "data": 96,
+      "user_id": "ea46df80-43c4-4003-89c0-500135be3cf1",
+      "unit_of_measurement": "HRV"
+    }
+  ]
+}
