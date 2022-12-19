@@ -48,19 +48,18 @@ class _MobileScaffoldState extends State<MobileScaffold> {
         //print("Data: " + dataInt.toString());
         String data = dataInt[0].toString();
         sensor.data = dataInt[0].toDouble();
-        String unitOfMeasurement = sensor.unit_of_measurement;
-
-        Api().updateSensorData(sensor);
+        
+        Sensor updatedSensor = Api().updateSensorData(sensor);
 
         setState(() {
           if (sensorType == "sugar_in_blood") {
-            glucoseData = data + " " + unitOfMeasurement;
+            glucoseData = updatedSensor.data + " " + updatedSensor.unitOfMeasurement;
           } else if (sensorType == "heart_rate") {
-            heartbeatData = data + " " + unitOfMeasurement;
+            heartbeatData = updatedSensor.data + " " + updatedSensor.unitOfMeasurement;
           } else if (sensorType == "blood_presure") {
-            pressureData = data + " " + unitOfMeasurement;
+            pressureData = updatedSensor.data + " " + updatedSensor.unitOfMeasurement;
           } else if (sensorType == "oxygen_in_blood") {
-            oxygenInBloodData = data + " " + unitOfMeasurement;
+            oxygenInBloodData = updatedSensor.data + " " + updatedSensor.unitOfMeasurement;
           }
         });
       }

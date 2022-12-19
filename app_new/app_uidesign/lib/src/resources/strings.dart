@@ -6,6 +6,6 @@ class Strings {
   static const noAuthException = 'No authentication token found. Please login.';
   static const noServerUrlAvailable = 'No server url available. Please set it in the settings.';
 
-  static const String BASE_URL = "https://cd0e-79-156-172-95.eu.ngrok.io/";
+  static const String BASE_URL = "https://cf60-158-109-94-83.eu.ngrok.io/";
 
 }
