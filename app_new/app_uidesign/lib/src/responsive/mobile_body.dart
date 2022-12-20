@@ -189,29 +189,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
         backgroundColor: defaultBackgroundColor,
         appBar: myAppBar,
         drawer: MobileDrawer(user: widget.user),
-        //body: Padding(
-        //  padding: const EdgeInsets.all(8.0),
-        //  child: Column(
-        //    children: [
-        //      // first 4 boxes in grid
-        //      AspectRatio(
-        //        aspectRatio: 1,
-        //        child: SizedBox(
-        //          width: double.infinity,
-        //          child: GridView.builder(
-        //            itemCount: 4,
-        //            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //                crossAxisCount: 2),
-        //            itemBuilder: (context, index) {
-        //              return MyBox();
-        //            },
-        //          ),
-        //        ),
-        //      ),
-        //    ],
-        //  ),
-        //),
-
+      
         body: Column(
           children: [
             // Expanded(
