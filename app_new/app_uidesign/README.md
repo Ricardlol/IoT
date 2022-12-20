@@ -1,16 +1,9 @@
 # app_uidesign
 
-A new Flutter project.
+This is a dashboard app type Flutter project inspired in the dashboard app project from Mitch Koko, https://github.com/mitchkoko/responsivedashboard.git.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a dashboard app for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+With the base code from Mitch Koko we adapted it so it shows 4 cards, one for each of our sensors to display the measurement from our smartwatch device and send notifications from the cloud in case the out of the norm data is percieved.
