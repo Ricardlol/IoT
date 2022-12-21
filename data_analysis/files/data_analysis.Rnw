@@ -129,7 +129,7 @@ historic <- data.frame(
 )
 @
 \section{Correlation study between variables}
-Our project is focused on diabetic people, that is why we studied the glucose levels against the other variables to see if there is any correlation between them. This has been done performing a Pearson Hypothesis Test, where the null hypothesis H0 is "there is not correlation", and the alternative hypothesis H1, "there is correlation" between the variables of the measurements.
+Our project is focused on diabetic people, that is why we studied the glucose levels against the other variables to see if there is any correlation between them. This has been done performing a Pearson Hypothesis Test, where the null hypothesis $H_0$ is "there is not correlation", and the alternative hypothesis $H_1$, "there is correlation" between the variables of the measurements.
 \subsection*{Glucose levels vs. Blood pressure}
 First of all a plot, with glucose levels on x-axis and blood pressure on y-axis.
 <<plt_bp, fig.align='center', fig.height=4, fig.width=4>>=
