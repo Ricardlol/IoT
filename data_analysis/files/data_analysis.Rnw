@@ -1,0 +1,264 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+%%% Load some LaTeX packages:
+\usepackage[utf8]{inputenc}
+\usepackage[nottoc,numbib]{tocbibind}      % for bibliography in the table of contents
+\usepackage{hyperref}                      % link to website: \url{}.
+\usepackage[hang,footnotesize,bf]{caption} % customized caption
+\usepackage{amsmath}                       % for mathematical features 
+\usepackage[left=2.5cm,top=3cm,bottom=3cm,right=2.5cm]{geometry}   % text margins
+\usepackage{booktabs}                      % for booktabs in print(xtable)).
+\usepackage{authblk}                       % for footnote style author/affiliation
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{bbm}              % for \mathbbm
+\newcommand{\I}{\mathbbm{1}}  % shortcut for indicator function
+\usepackage{enumitem}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{titling}
+%\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+%\renewcommand\maketitlehookd{\vfill\null}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%%% Some LaTeX "macros":
+\newcommand{\R}{\textsf{R}}
+\newcommand{\Rpackage}[1]{\textsf{#1}}
+\newcommand{\Robject}[1]{\texttt{#1}}
+
+\newcommand{\hltexttt}[1]{\texttt{\hl{#1}}}
+
+<<install_libraries, include=FALSE, eval=FALSE>>=
+install.packages("rjson")
+@
+
+<<libraries, include=FALSE>>=
+### libraries related to knit:
+library(rjson)
+@
+
+<<setting, include=FALSE, purl=FALSE>>=
+### output options (there are a lot..):
+options(
+   width = 90, # max. width, in characters, of the R output. Default is 80.
+   scipen = 4  # to avoid printing inline R output numbers in scientific
+               # notation if they are lower than 10^4
+)
+
+### set global chunk options. They apply to all chuncks except to those in which
+### you set otherwise
+opts_chunk$set(
+   echo = TRUE,         # don't show R input code
+   message = TRUE,       # set to FALSE to avoid nuisance messages (be careful!)         
+   warning = TRUE,       # set to FALSE to avoid nuisance messages (be careful!)         
+   size = "footnotesize", # set the R output and output font size 
+   cache = TRUE,          # useful for computationally costly chunks (be careful!)
+   prompt = TRUE
+)
+@
+
+\begin{document}
+
+\title{Data Analysis of DiaHelp user}
+\author{Internet of things}
+\maketitle
+\section{Introduction}
+For this data analysis we will have to interpret the results for the data we have, and since it is not real data, it may show incoherent results. Here we start at a point where we have a new measurement found on {\it measurement.json}.
+
+\section{Reading the new measurement}
+Since the measurement we get is received in json format, we use the library {\tt rjson} to import this data to the script. Then we transform this data to a data frame and select the wanted columns.
+<<new_mes_df>>=
+library(rjson)
+js <- fromJSON(file = "../measurement.json")
+df <- as.data.frame(js)
+df <- df[,c("phone_number", "age", "gender", "full_name", "sensors.name"
+      ,"sensors.data", "sensors.unit_of_measurement"
+      ,"sensors.name.1", "sensors.data.1", "sensors.unit_of_measurement.1"
+      ,"sensors.name.2", "sensors.data.2", "sensors.unit_of_measurement.2"
+      ,"sensors.name.3", "sensors.data.3", "sensors.unit_of_measurement.3")]
+@
+
+\section{Simulating data}
+Medical data is sensitive and hard to find a good dataset on the Internet, that is the reason why we had to simulate our data, though, and the end of the day we have generated random data.
+\\We needed an historic of the user that is why we have generated 1000 measurements for each sensor.
+All the different data follows a normal distribution, and it is clearly seen when we plot an histogram of the variable of the measurement for each sensor.
+\subsection*{Glucose levels simulation}
+We have decided to generate random data following a normal distribution with mean of 120 and a standard deviation of 40. This numbers are an estimation done by ourselves after reading information on \url{https://www.healthline.com/health/diabetes/blood-sugar-level-chart#recommended-ranges}.
+<<sim_gc,fig.align='center', fig.height=3, fig.width=4>>=
+sim_gc <- rnorm(1000, mean = 120, sd = 40)
+hist(sim_gc, xlab = "Glucose levels", main = "Histogram of Glucose levels")
+@
+\subsection*{Blood pressure simulation}
+We have decided to generate random data following a normal distribution with mean of 110 and a standard deviation of 15. This numbers are an estimation done by ourselves after reading information on \url{https://www.emedicinehealth.com/what_is_a_normal_blood_pressure_range_by_age/article_em.htm}.
+<<sim_bp,fig.align='center', fig.height=3, fig.width=4>>=
+sim_bp <- rnorm(1000, mean = 110, sd = 15)
+hist(sim_bp, xlab = "Blood pressure", main = "Histogram of Blood pressure")
+@
+\subsection*{Heart rate simulation}
+We have decided to generate random data following a normal distribution with mean of 40 and a standard deviation of 10. This numbers are an estimation done by ourselves after reading information on \url{https://www.whoop.com/thelocker/normal-hrv-range-age-gender/}.
+<<sim_hr,fig.align='center', fig.height=3, fig.width=4>>=
+sim_hr <- rnorm(1000, mean = 40, sd = 10)
+hist(sim_hr, xlab = "Heart rate", main = "Histogram of Heart rate")
+@
+\subsection*{Oxygen in blood simulation}
+We have decided to generate random data following a normal distribution with mean of 96 and a standard deviation of 3. This numbers are an estimation done by ourselves after reading information on \url{https://www.emedicinehealth.com/what_is_a_good_oxygen_rate_by_age/article_em.htm}.
+<<sim_ob,fig.align='center', fig.height=3, fig.width=4>>=
+sim_ob <- rnorm(1000, mean = 96, sd = 3)
+hist(sim_ob, xlab = "Oxygen in blood", main = "Histogram of Oxygen in blood")
+@
+\subsection*{Merging all new data}
+Now we want to have all this data together as we could have it in our database, so merge all the data in a data frame. This is the replacement of the historic of the user that we don't have.
+<<merge>>=
+historic <- data.frame(
+  "glucose levels (mg/dl)" = sim_gc
+  ,"blood pressure (mm/Hg)" = sim_bp
+  ,"heart rate (HRV)" = sim_hr
+  ,"oxygen levels (HRV)" = sim_ob
+  ,check.names=FALSE
+)
+@
+\section{Correlation study between variables}
+Our project is focused on diabetic people, that is why we studied the glucose levels against the other variables to see if there is any correlation between them. This has been done performing a Pearson Hypothesis Test, where the null hypothesis H0 is "there is not correlation", and the alternative hypothesis H1, "there is correlation" between the variables of the measurements.
+\subsection*{Glucose levels vs. Blood pressure}
+First of all a plot, with glucose levels on x-axis and blood pressure on y-axis.
+<<plt_bp, fig.align='center', fig.height=4, fig.width=4>>=
+plot(historic$`glucose levels (mg/dl)`, historic$`blood pressure (mm/Hg)`,
+     xlab = "Glucose levels", ylab = "Blood pressure",
+     main = "Glcuose levels vs Blood pressure")
+@
+\noindent From the plot we can already expect there won't be any correlation. With the correlation test we can confirm that.
+<<test_bp>>=
+test_gc <- cor.test(historic$`glucose levels (mg/dl)`, historic$`blood pressure (mm/Hg)`)
+print(test_gc)
+@
+\noindent The correlation coefficient between the two vectors turns out to be \Sexpr{test_gc$estimate}. A positive correlation would be near 1, a negative one near -1, and no correlation near 0. The p-value is \Sexpr{test_gc$p.value}, higher than 0.05, so we decide to believe that we cannot fail to reject the null hypothesis, hence there is no correlation between the glucose levels and the blood pressure.
+\subsection*{Glucose levels vs. Heart rate}
+First of all a plot, with glucose levels on x-axis and heart rate on y-axis.
+<<plt_hr, fig.align='center', fig.height=4, fig.width=4>>=
+plot(historic$`glucose levels (mg/dl)`, historic$`heart rate (HRV)`,
+     xlab = "Glucose levels", ylab = "Heart rate",
+     main = "Glcuose levels vs Heart rate")
+@
+\noindent From the plot we can already expect there won't be any correlation. With the correlation test we can confirm that.
+<<test_hr>>=
+test_hr <- cor.test(historic$`glucose levels (mg/dl)`, historic$`heart rate (HRV)`)
+print(test_hr)
+@
+\noindent The correlation coefficient between the two vectors turns out to be \Sexpr{test_hr$estimate}. A positive correlation would be near 1, a negative one near -1, and no correlation near 0. The p-value is \Sexpr{test_hr$p.value}, higher than 0.05, so we decide to believe that we cannot fail to reject the null hypothesis, hence there is no correlation between the glucose levels and the blood pressure.
+\subsection*{Glucose levels vs. Oxygen in blood}
+First of all a plot, with glucose levels on x-axis and oxygen levels on y-axis.
+<<plt_ol, fig.align='center', fig.height=4, fig.width=4>>=
+plot(historic$`glucose levels (mg/dl)`, historic$`oxygen levels (HRV)`,
+     xlab = "Glucose levels", ylab = "Oxygen in blood",
+     main = "Glcuose levels vs Oxygen in blood")
+@
+\noindent From the plot we can already expect there won't be any correlation. With the correlation test we can confirm that.
+<<test_ol>>=
+test_ol <- cor.test(historic$`glucose levels (mg/dl)`, historic$`oxygen levels (HRV)`)
+print(test_ol)
+@
+\noindent The correlation coefficient between the two vectors turns out to be \Sexpr{test_ol$estimate}. A positive correlation would be near 1, a negative one near -1, and no correlation near 0. The p-value is \Sexpr{test_ol$p.value}, higher than 0.05, so we decide to believe that we cannot fail to reject the null hypothesis, hence there is no correlation between the glucose levels and the blood pressure.
+\section{Abnormal measurements}
+For the new measurement we have taken from the user we now want to check if the values are normal for they history because in case they are not they could be in a potential risk of an emergency situation and they could need help. So for this section we are going to construct $99\%$ confidence intervals and raise a message in case the new value is out of the bounds of the interval.
+\\\\
+First we need to compute the {\it t-score} for a $99\%$ confidence.
+<<t_score>>=
+# length of the historic
+n <- length(historic$`glucose levels (mg/dl)`)
+
+# calculate t-value for 99% confidence
+alpha = 0.01
+degrees_of_freedom = n - 1
+t_score = qt(p=alpha/2, df=degrees_of_freedom,lower.tail=F)
+@
+\subsection*{Glucose levels}
+Having the {\it t-score} we now can construct the interval. For the glucose levels:
+<<ci_gl>>=
+# confidence interval for glucose levels
+X <- mean(historic$`glucose levels (mg/dl)`)
+sd <- sd(historic$`glucose levels (mg/dl)`)
+std_error <- sd / sqrt(n)
+margin_error <- t_score * std_error
+up_bound_gc <- X + margin_error
+low_bound_gc <- X - margin_error
+@
+\noindent The lower bound of the interval is \Sexpr{low_bound_gc}, the mean is \Sexpr{X} and the upper bound \Sexpr{up_bound_gc}. And with the first data frame we built for the new measurement we can check if the new input value is in the normal values of the user.
+<<ch_gl>>=
+if (df$sensors.data < low_bound_gc || df$sensors.data > up_bound_gc) 
+  print("You should check your glucose levels!")
+@
+\noindent The new measurement is \Sexpr{df$sensors.data} \Sexpr{df$sensors.unit_of_measurement}, since it inside the interval then there is nothing to alert.
+\subsection*{Blood pressure}
+For the blood pressure:
+<<ci_bp>>=
+# confidence interval for blood pressure
+X <- mean(historic$`blood pressure (mm/Hg)`)
+sd <- sd(historic$`blood pressure (mm/Hg)`)
+std_error <- sd / sqrt(n)
+margin_error <- t_score * std_error
+up_bound_bp <- X + margin_error
+low_bound_bp <- X - margin_error
+@
+\noindent The lower bound of the interval is \Sexpr{low_bound_bp}, the mean is \Sexpr{X} and the upper bound \Sexpr{up_bound_bp}. And with the first data frame we built for the new measurement we can check if the new input value is in the normal values of the user.
+<<ch_bp>>=
+if (df$sensors.data.1 < low_bound_bp || df$sensors.data.1 > up_bound_bp) 
+  print("You should check your blood pressure!")
+@
+\noindent The new measurement is \Sexpr{df$sensors.data.1} \Sexpr{df$sensors.unit_of_measurement.1}. In this situation the value is lower than the norm, so we notify the user to check his blood pressure.
+\subsection*{Heart rate}
+For the heart rate:
+<<ci_hr>>=
+# confidence interval for heart rate
+X <- mean(historic$`heart rate (HRV)`)
+sd <- sd(historic$`heart rate (HRV)`)
+std_error <- sd / sqrt(n)
+margin_error <- t_score * std_error
+up_bound_hr <- X + margin_error
+low_bound_hr <- X - margin_error
+@
+\noindent The lower bound of the interval is \Sexpr{low_bound_hr}, the mean is \Sexpr{X} and the upper bound \Sexpr{up_bound_hr}. And with the first data frame we built for the new measurement we can check if the new input value is in the normal values of the user.
+<<ch_hr>>=
+if (df$sensors.data.2 < low_bound_hr || df$sensors.data.2 > up_bound_hr) 
+  print("You should check your heart rate!")
+@
+\noindent The new measurement is \Sexpr{df$sensors.data.2} \Sexpr{df$sensors.unit_of_measurement.2}, since it inside the interval then there is nothing to alert.
+\subsection*{Oxygen in blood}
+For the oxygen in blood:
+<<ci_ol>>=
+# confidence interval for oxygen levels
+X <- mean(historic$`oxygen levels (HRV)`)
+sd <- sd(historic$`oxygen levels (HRV)`)
+std_error <- sd / sqrt(n)
+margin_error <- t_score * std_error
+up_bound_ol <- X + margin_error
+low_bound_ol <- X - margin_error
+@
+\noindent The lower bound of the interval is \Sexpr{low_bound_ol}, the mean is \Sexpr{X} and the upper bound \Sexpr{up_bound_ol}. And with the first data frame we built for the new measurement we can check if the new input value is in the normal values of the user.
+<<ch_ol>>=
+if (df$sensors.data.3 < low_bound_ol || df$sensors.data.3 > up_bound_ol) 
+  print("You should check your oxygen levels!")
+
+@
+\noindent The new measurement is \Sexpr{df$sensors.data.3} \Sexpr{df$sensors.unit_of_measurement.3}, since it inside the interval then there is nothing to alert.
+\\\\
+\section{Improve our data}
+This new measurement can be used in the future to prevent unwanted situation, that is why we add it to the historic of the user.
+<<add>>=
+new_measurement <- c(df$sensors.data, df$sensors.data.1, df$sensors.data.2, df$sensors.data.3)
+historic <- rbind(historic, new_measurement)
+@
+\section{Results}
+All the results shown in this analysis are the result of the randomly generated data with Gaussian distributions. That is why they don't reflect reality and we do not take responsibility for any misuse or misinterpretation of these results.
+\\Since the data has been generated using a normal distribution, and independently one from another variable, it makes sense they are not correlated at all, however, we would probably see some if the data was from a real user. Another problem arises with the confidence intervals, which they are quite narrow due to how the data has been accuired.
+\end{document}
